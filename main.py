@@ -39,7 +39,7 @@ def read_and_preprocess_data(file_path):
 
     for _, row in df.iterrows():            
         for col in df.columns:
-            if 'Поставьте оценку с тем, с кем вы когда-либо работали в команде.' in col:
+            if 'Поставьте оценку тому, с кем Вы работали в команде.' in col:
                 rated_person = col.split('[')[1].split(']')[0]
                 if row['Кто Вы?'] == rated_person:
                     continue  # Пропускаем самооценку'
