@@ -1,6 +1,27 @@
 import pandas as pd
 from collections import defaultdict, deque
 
+
+pris = [
+    'Пашутин Арсений Павлович',
+    'Красавин Леонид Ильич',
+    'Лаврентьев Сергей Андреевич',
+    'Викулова Алиса Александровна',
+    'Загорский Матвей Алексеевич',
+    'Сергеев Кирилл Сергеевич',
+    'Белов Алексей Сергеевич',
+    'Торопова Екатерина Николаевна',
+    'Авдиенко Илья Иванович',
+    'Хисиева Мария Владимировна',
+    'Сакунова Дарья Александровна',
+    'Цветкова Валерия Сергеевна',
+    'Лапшин Павел Сергеевич',
+    'Смолова Алёна Алексеевна',
+    'Цветкова Наталья Дмитриевна',
+    # 'Коржев Егор Алексеевич',
+]
+
+
 def get_participant_by_name(participants, name):
     for participant in participants:
         if participant['name'] == name:
@@ -24,12 +45,13 @@ def read_and_preprocess_data(file_path):
         if 'Поставьте оценку тому, с кем Вы работали в команде.' in col:
             # Извлечение имени из скобок
             name = col.split('[')[1].split(']')[0]
-            result.append({
-                'name': name,
-                'score': 0,
-                'ratings': {},
-                'questions': []
-            })
+            if name in pris:
+                result.append({
+                    'name': name,
+                    'score': 0,
+                    'ratings': {},
+                    'questions': []
+                })
     
     for p1 in result:
         for p2 in result:
@@ -41,7 +63,7 @@ def read_and_preprocess_data(file_path):
         for col in df.columns:
             if 'Поставьте оценку тому, с кем Вы работали в команде.' in col:
                 rated_person = col.split('[')[1].split(']')[0]
-                if row['Кто Вы?'] == rated_person:
+                if row['Кто Вы?'] == rated_person or rated_person not in pris:
                     continue  # Пропускаем самооценку'
                 if not pd.isna(row[col]):
                     participant = get_participant_by_name(result, row['Кто Вы?'])
