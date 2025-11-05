@@ -1,7 +1,7 @@
 import pandas as pd
 from collections import defaultdict, deque
 
-
+# присутствующие на занятии
 pris = [
     'Пашутин Арсений Павлович',
     'Красавин Леонид Ильич',
